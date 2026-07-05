@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debasement · how a standard rots while its name stays the same</title>
+<meta name="description" content="Debasement — an AGORA teardown, render-not-invent: a monetary standard erodes two ways that must never be collapsed — of the STANDARD (less metal by weight: light coins, clipping, short-measure) and by ALLOY (same weight, less fineness). Alloy debasement needs coins, so on the Enheduanna baseline (c.2300 BCE, no coins for ~1,700 years) only standard-erosion is possible. A two-series Roman denarius fineness chart (surface vs bulk assay) and a Gresham's-Law mint toy that shows the law is conditional, not universal. Two-layer honest. David Lee Wise / ROOT0, with AVAN.">
+<style>
+  :root{ --vellum:#f2ecdd; --vellum2:#ece3cf; --ink:#2c2416; --ink2:#54492f; --dim:#8a7a55;
+    --line:#d8c7a2; --hi:#faf4e6; --green:#4a7a3f; --red:#b0472e; --clay2:#8a5f36;
+    --tarnish:#585c61; --tarnish-hi:#8a8f96; --copper:#a5673f; --copper-d:#8a4f2c; }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--vellum);color:var(--ink);line-height:1.62;
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    background-image:radial-gradient(120% 80% at 106% -6%,rgba(88,92,97,.10),transparent 52%);}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 22px 90px}
+  .eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--clay2)}
+  h1{font-size:clamp(28px,5.4vw,44px);margin:.24em 0 .12em;font-weight:600}
+  h1 .s{color:var(--tarnish)}
+  .sub{max-width:74ch;font-size:16.5px;color:var(--ink2)} .sub b{color:var(--ink)}
+  h2{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--clay2);margin:0 0 12px}
+  section{margin:38px 0 0;padding:22px 24px;border:1px solid var(--line);border-radius:4px;background:var(--hi)}
+  p{max-width:78ch}
+  .anchor{border-left:3px solid var(--tarnish);background:rgba(88,92,97,.05)}
+  .arc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+  @media(max-width:720px){.arc{grid-template-columns:1fr 1fr}}
+  .beat{border:1px solid var(--line);border-radius:4px;padding:12px 13px;background:var(--vellum)}
+  .beat .yr{font-family:ui-monospace,monospace;font-size:11px;color:var(--clay2)} .beat b{display:block;margin:3px 0 4px;font-size:14.5px} .beat span{font-size:12.5px;color:var(--ink2)}
+  svg{width:100%;height:auto;display:block}
+  .chart{margin:8px auto 2px;max-width:640px}
+  .legend{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--ink2);display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}
+  .legend i{font-style:normal;display:inline-flex;align-items:center;gap:6px}
+  .sw{width:22px;height:0;border-top-width:3px;border-top-style:solid;display:inline-block}
+  .callout{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);border-left:2px solid var(--copper);padding:9px 13px;margin-top:12px;background:rgba(165,103,63,.05)}
+  .callout b{color:var(--copper-d)}
+  /* mint toy */
+  .toy{margin-top:8px}
+  .ctrls{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;margin:6px 0 12px}
+  @media(max-width:640px){.ctrls{grid-template-columns:1fr}}
+  .ctrl label{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);display:block;margin-bottom:5px}
+  .ctrl .val{color:var(--tarnish);font-weight:600}
+  input[type=range]{width:100%;accent-color:var(--tarnish)}
+  .peg{display:flex;align-items:center;gap:10px;font-family:ui-monospace,monospace;font-size:12px;color:var(--ink2);margin:2px 0 12px}
+  .toggle{position:relative;width:44px;height:24px;border:1px solid var(--line);border-radius:20px;background:var(--vellum);cursor:pointer;flex:0 0 auto}
+  .toggle .dot{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--dim);transition:.16s}
+  .toggle.on{background:rgba(88,92,97,.18);border-color:var(--tarnish)} .toggle.on .dot{left:22px;background:var(--tarnish)}
+  .circ{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  @media(max-width:560px){.circ{grid-template-columns:1fr}}
+  .bin{border:1px solid var(--line);border-radius:4px;padding:11px 13px;background:var(--vellum);min-height:96px}
+  .bin h4{margin:0 0 8px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .coins{display:flex;flex-wrap:wrap;gap:5px}
+  .coin{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:9px;border:1.5px solid;transition:.3s}
+  .coin.good{background:radial-gradient(circle at 35% 30%,#e9edf2,#b7bcc4);border-color:#8a8f96;color:#4a4f55}
+  .coin.bad{background:radial-gradient(circle at 35% 30%,#d8b38f,#a5673f);border-color:#8a4f2c;color:#3a2410}
+  .coin.gone{opacity:.18}
+  .coin.enter{animation:coinIn .32s ease both}
+  @keyframes coinIn{from{opacity:0;transform:translateY(-10px) scale(.8)}to{opacity:1;transform:none}}
+  .verdict{font-family:ui-monospace,monospace;font-size:13px;margin-top:12px;padding:11px 13px;border:1px solid var(--line);border-radius:4px;background:var(--vellum);line-height:1.6}
+  .verdict.gresham{border-color:var(--copper);color:var(--copper-d)} .verdict.thiers{border-color:var(--green);color:var(--green)} .verdict.fair{border-color:var(--tarnish);color:var(--tarnish)}
+  /* two attacks */
+  .attacks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:640px){.attacks{grid-template-columns:1fr}}
+  .atk{border:1px solid var(--line);border-radius:4px;padding:14px;background:var(--vellum);text-align:center}
+  .atk h4{margin:0 0 4px;font-size:14px} .atk .cn{font-size:12px;color:var(--ink2);min-height:34px;display:block;margin-top:6px}
+  .atk button{margin-top:8px}
+  .cap{font-size:12px;color:var(--dim);line-height:1.5;margin-top:10px}
+  button{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--clay2);background:var(--hi);border:1px solid var(--tarnish);border-radius:4px;padding:8px 13px;cursor:pointer}
+  button:hover{background:var(--tarnish);color:#fff}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .col h3{font-size:13px;margin:0 0 7px} .col.real h3{color:var(--green)} .col.debate h3{color:var(--clay2)}
+  .col li{font-size:12.5px;color:var(--ink2);margin-bottom:6px;line-height:1.5}
+  a{color:var(--clay2)}
+  .flagbox{margin-top:14px;background:rgba(176,71,46,.06);border:1px solid rgba(176,71,46,.3);border-radius:4px;padding:12px 14px;font-size:13px;color:var(--ink2)} .flagbox b{color:var(--red)}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-family:ui-monospace,monospace;font-size:11px;color:var(--dim);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">UD0 · AGORA · THE MARKETPLACE · Enheduanna baseline · render-not-invent</div>
+  <h1><span class="s">Debasement</span> — how a standard rots while its name stays the same</h1>
+  <p class="sub">A unit of money can be hollowed out two ways that must never be confused. <b>Of the standard:</b> give less metal for the same name — a lighter coin, a short weight, a clipped rim. <b>By alloy:</b> keep the weight, swap the silver for copper. Alloy debasement needs a struck coin that passes by its face; standard-erosion needs only a name and a scale — which is why it is the <b>older</b> of the two. On Enheduanna's baseline there were no coins for ~1,700 years, so her world could only be cheated the first way.</p>
+
+  <section class="anchor">
+    <h2>the Enheduanna baseline</h2>
+    <p style="margin:0">AGORA anchors on Enheduanna (c. 2300 BCE, en-priestess of the moon-god Nanna at Ur, daughter of Sargon) by <b>era and script only</b> — she was a priestess and the earliest named author-figure, <i>not</i> a mint official, moneylender, or monetary reformer. The tie is that her world already had the thing debasement attacks: a <a href="https://davidwise01.github.io/the-shekel/">standard of value</a>, the weighed silver shekel, recorded in cuneiform. And it had <b>no coins</b> — so the only debasement possible in her lifetime was erosion of the <i>standard</i> (false weights, short measure, a drifting mina), never alloy. The first coin you could dilute with copper is Lydian, ~1,700 years later. <b>Honest limit:</b> "the standard can rot as soon as there is a standard" — a claim about the unit, not her biography. Her own works survive only in Old-Babylonian copies ~500 years later, and her authorship is debated; she is a dating anchor, not a preserved source.</p>
+  </section>
+
+  <section>
+    <h2>two attacks, and which one her age could do</h2>
+    <div class="arc">
+      <div class="beat"><span class="yr">~2300 BCE</span><b>standard only</b><span>Money is weighed silver. No coin exists, so no alloy trick. You cheat the <i>weight</i>: a false stone, a short measure, a mina that quietly drifts. Law already polices it (later, Hammurabi's false-weights clause).</span></div>
+      <div class="beat"><span class="yr">~600 BCE</span><b>the coin arrives</b><span>Lydia strikes electrum stamped to guarantee weight — so you can now count instead of weigh. The stamp also makes a <i>new</i> lie possible: keep the weight, hollow out the metal.</span></div>
+      <div class="beat"><span class="yr">64 CE →</span><b>the alloy age</b><span>Rome runs the classic experiment: the silver denarius falls from near-pure to a few percent over three centuries, its silver quietly replaced by copper under an unchanged name and face.</span></div>
+      <div class="beat"><span class="yr">every age</span><b>from below, too</b><span>Debasement isn't only top-down. Users <i>clip</i> and <i>sweat</i> metal off the rim — which is why milled, reeded edges were eventually invented. The coin keeps its name; its edge disappears.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>machine · the great Roman rot — and why the number depends on how you measure</h2>
+    <p>The denarius is history's best-recorded debasement. But every "silver %" you see is <b>method-dependent</b>: old <i>surface</i> assays read high because minting and corrosion leach copper from the surface, leaving a silver-rich skin (later coins were even deliberately silver-<i>washed</i>). Modern <i>bulk</i> analysis drills a core and reads lower. So this is drawn as a <b>band</b>, not a crisp line — the width is the honesty.</p>
+    <div class="chart"><svg id="finenessSvg" viewBox="0 0 640 340" aria-label="Roman silver fineness over time, drawn as an uncertainty band"></svg></div>
+    <div class="legend">
+      <i><span class="sw" style="border-color:var(--tarnish-hi)"></span> silver-rich (top of band)</i>
+      <i><span class="sw" style="border-color:var(--copper)"></span> copper-rich (bottom of band)</i>
+      <i><span class="sw" style="border-color:var(--tarnish);border-top-style:dashed"></span> bulk-core check (Butcher &amp; Ponting)</i>
+    </div>
+    <div class="callout"><b>The method gap, not hidden.</b> Surface figures (Walker, 1970s) run up to <b>~15 points too high</b>. Nero's post-64 denarius is ~93–94% by surface but <b>~80%</b> by bulk core; Augustus's Lyon issues are "~95–98%" by surface but essentially <b>unalloyed</b> by bulk. The famous "98% → 5%" span is a rhetorical stretch across <i>two</i> coins (Augustan denarius → Gallienic antoninianus/billon) and <i>two</i> methods. The <b>direction</b> — near-pure silver to a few-percent billon by the 260s–270s — is solid; the exact per-emperor figures are an approximate curve.</p></div>
+  </section>
+
+  <section>
+    <h2>machine · debase the mint — and watch Gresham's Law switch on and off</h2>
+    <p>"Bad money drives out good" is real, but it is <b>not</b> a universal law. It needs a mispriced <i>peg</i>: two coins forced by law to be accepted at the same face value. Set an official tariff above the coin's metal worth, then flip the legal-tender peg — watch the good coins flee or come back.</p>
+    <div class="toy">
+      <div class="ctrls">
+        <div class="ctrl"><label>official tariff (what the law says a debased coin is worth): <span class="val" id="tariffV">2.0</span> denarii</label>
+          <input type="range" id="tariff" min="1" max="2.5" step="0.1" value="2.0"></div>
+        <div class="ctrl"><label>real silver in that coin: <span class="val" id="metalV">1.5</span> denarii</label>
+          <input type="range" id="metal" min="0.3" max="2.5" step="0.1" value="1.5"></div>
+      </div>
+      <div class="peg"><span class="toggle on" id="peg"><span class="dot"></span></span> <span id="pegLbl"><b>legal tender at par: ON</b> — the law forces both coins accepted equally</span></div>
+      <div class="circ">
+        <div class="bin"><h4>in circulation</h4><div class="coins" id="circ"></div></div>
+        <div class="bin"><h4>hoarded · melted · exported</h4><div class="coins" id="hoard"></div></div>
+      </div>
+      <div class="verdict" id="mintVerdict"></div>
+      <p class="cap"><b>Real mechanism, computed live.</b> When the tariff exceeds the metal (overvalued) <i>and</i> the peg forces par, good full-silver coins are worth more melted than spent, so they vanish — <b>Gresham's Law</b>. Turn the peg <i>off</i> (let people discount the bad coin) and it reverses: the bad coin trades at a discount and the good one stays — the "Thiers' Law" case (Rolnick &amp; Weber, 1986). Gresham himself did not discover this — Oresme, Copernicus, even Aristophanes' <i>Frogs</i> describe it centuries earlier; the eponym is a 19th-century attribution.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>machine · two ways to break one coin</h2>
+    <p>Same coin, same name — two independent attacks. One shaves the <i>weight</i>; the other swaps the <i>metal</i>. Only the second needs the coin to pass by its face rather than its mass.</p>
+    <div class="attacks">
+      <div class="atk"><svg id="stdCoin" viewBox="0 0 120 120" style="max-width:120px;margin:0 auto"></svg>
+        <h4>of the STANDARD</h4><span class="cn" id="stdCn">Full weight. Full name.</span>
+        <button id="stdBtn">✂ clip the rim</button></div>
+      <div class="atk"><svg id="alloyCoin" viewBox="0 0 120 120" style="max-width:120px;margin:0 auto"></svg>
+        <h4>by ALLOY</h4><span class="cn" id="alloyCn">Full silver. Full name.</span>
+        <button id="alloyBtn">⚗ swap in copper</button></div>
+    </div>
+    <p class="cap"><b>The ordering is the point.</b> Standard-erosion (left) works on any weighed money — it is as old as the shekel, ~1,700 years before a coin existed. Alloy debasement (right) can only happen once coins pass by tale, by their stamped face. Enheduanna's age had the left attack available and not the right. The profit from either — the metal the issuer keeps — is <b>seigniorage</b>: the antoninianus tariffed at 2 denarii but holding ~1.5 handed Rome a <b>25%</b> cut of every coin's face, free.</p>
+  </section>
+
+  <section>
+    <h2>the reckoning — what's settled, what's still argued</h2>
+    <div class="cols">
+      <div class="col real"><h3>✓ SETTLED</h3>
+        <ul style="padding-left:18px;margin:0">
+          <li>Two distinct debasements: of the <b>standard</b> (less metal per name, by weight — light coins, short-measure, clipping) vs by <b>alloy</b> (same weight, less fineness). Alloy needs struck coins passing by tale.</li>
+          <li>Standard-erosion is <b>older</b>: weighed-silver money (the shekel) predates coinage by 1,000+ years; the first coin is Lydian, ~600 BCE.</li>
+          <li>The Roman denarius fell from near-pure silver (Augustus) to a few-percent billon by the 260s–270s — a consensus <i>trajectory</i>. Nero's AD 64 reform is the textbook first debasement; the antoninianus (215 CE) was fiduciary — tariffed 2 denarii, ~1.5 of silver.</li>
+          <li>Fineness figures differ systematically by assay method (surface reads high via depletion silvering; bulk cores read lower).</li>
+          <li>Gresham's Law needs two monies <i>and</i> a legally fixed, mispriced exchange rate; its correct form is "overvalued drives out undervalued."</li>
+        </ul>
+      </div>
+      <div class="col debate"><h3>⚑ STILL CONTESTED</h3>
+        <ul style="padding-left:18px;margin:0">
+          <li><b>Exact fineness numbers</b> — surface vs bulk disagree by up to ~15 points; the per-emperor curve is direction + rough magnitude, not exact assay values.</li>
+          <li><b>Debasement → collapse</b> — the tidy "debasement caused the hyperinflation that felled Rome" chain is popular but the quantitative link is debated; "decline" itself is contested framing. A major symptom, not a proven sole cause.</li>
+          <li><b>Gresham as a universal law</b> — without the mispriced peg, "good drives out bad" (Thiers) can hold instead. Conditional, not iron.</li>
+          <li><b>Did the ancient standard "erode over time"?</b> — no: Bronze-Age weights held a low ~5–6% variation over 2,000 years. The honest picture is <i>many coexisting, imperfect, fraud-prone</i> standards, not one unit that inflated away.</li>
+          <li><b>"Inflation" at 2300 BCE</b> is anachronistic (no money-supply lever). Use "price movement / ratio drift." The rich price series (random-walk, war spikes) is 1st-millennium Babylon — ~1,700 years later, a different era.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flagbox"><b>Three hard flags, kept.</b> (1) <b>Figures vary by method</b> — every silver % is surface-or-bulk; there is no single "true" number, so the chart is a band. (2) <b>No coins on the baseline</b> — alloy debasement is impossible in Enheduanna's age; only standard-erosion applies, and even that was bounded, not runaway. (3) <b>Gresham is conditional</b> — it is routinely oversimplified into a false universal.</div>
+    <p class="cap" style="margin-top:12px"><b>Render-not-invent.</b> Sources: K. Butcher &amp; M. Ponting, <i>The Metallurgy of Roman Silver Coinage</i> (Cambridge, 2015) and Butcher, "Debasement and the decline of Rome"; D. R. Walker's surface metrology (the traditional series); Sargent &amp; Velde, <i>The Big Problem of Small Change</i> (2002); Rolnick &amp; Weber, "Gresham's Law or Gresham's Fallacy?" (JPE 1986); Selgin (EH.net) and the Cleveland Fed on Gresham; Ialongo, Hermann &amp; Rahmstorf (PNAS 2021) on Bronze-Age weight stability; Cripps (CDLJ 2017:2) on Neo-Sumerian barley:silver ratios. Where it belongs: <a href="https://davidwise01.github.io/the-shekel/">the-shekel</a> (the standard it attacks) · <a href="https://davidwise01.github.io/money/">money</a> · <a href="https://davidwise01.github.io/debt/">debt</a> · <a href="https://davidwise01.github.io/bitcoin/">bitcoin</a> (a standard engineered to resist it).</p>
+    <p class="cap" style="margin-top:8px"><b>AVAN's inverse companion:</b> <a href="https://davidwise01.github.io/meberi/">目減り · Meberi</a> — the unit keeps its name and loses its substance; debasement seen not from the mint above but from the hand below, where the coin still says "one" and holds less.</p>
+  </section>
+
+  <footer>
+    AGORA · the marketplace · UD0 · David Lee Wise (ROOT0) with AVAN · Enheduanna baseline · render-not-invent, two-layer honest · CC-BY-ND-4.0
+  </footer>
+</div>
+<script>
+"use strict";
+/* ---------- fineness band chart ---------- */
+// verified points: {label, year, hi (surface %), lo (bulk/low %), bulk (drilled-core point or null), mark}
+var FN=[
+  {lab:"Augustus",yr:-20,hi:98,lo:95,bulk:99,mark:""},
+  {lab:"Nero 64",yr:64,hi:94,lo:80,bulk:80,mark:"AD 64 · first debasement"},
+  {lab:"Trajan",yr:107,hi:90,lo:88,bulk:null,mark:""},
+  {lab:"M. Aurelius",yr:170,hi:83,lo:75,bulk:null,mark:""},
+  {lab:"Commodus",yr:186,hi:72,lo:68,bulk:null,mark:""},
+  {lab:"Sev. Severus",yr:200,hi:58,lo:50,bulk:null,mark:""},
+  {lab:"Caracalla",yr:215,hi:52,lo:48,bulk:null,mark:"AD 215 · antoninianus, fiduciary from day one"},
+  {lab:"Gallienus",yr:265,hi:5,lo:2,bulk:null,mark:"c.260s · collapse to billon + silver wash"},
+  {lab:"Aurelian",yr:274,hi:6,lo:4,bulk:null,mark:"AD 274 · XXI, a managed billon standard"}
+];
+(function(){
+  var W=640,H=340,mL=42,mR=14,mT=16,mB=64, y0=-30,y1=300;
+  function X(yr){ return mL+(yr-y0)/(y1-y0)*(W-mL-mR); }
+  function Y(p){ return mT+(100-p)/100*(H-mT-mB); }
+  var s='';
+  // gridlines + y labels
+  [0,25,50,75,100].forEach(function(p){ var y=Y(p);
+    s+='<line x1="'+mL+'" y1="'+y+'" x2="'+(W-mR)+'" y2="'+y+'" stroke="#d8c7a2" stroke-width="1"/>';
+    s+='<text x="'+(mL-6)+'" y="'+(y+3)+'" text-anchor="end" font-family="monospace" font-size="9" fill="#8a7a55">'+p+'%</text>'; });
+  // x ticks
+  [0,100,200,300].forEach(function(yr){ var x=X(yr); var anc=(yr>=300?'end':'middle');
+    s+='<text x="'+x+'" y="'+(H-mB+18)+'" text-anchor="'+anc+'" font-family="monospace" font-size="9" fill="#8a7a55">'+(yr<=0?(-yr+" BCE"):(yr+" CE"))+'</text>'; });
+  s+='<text x="'+((mL+W-mR)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-family="monospace" font-size="9" fill="#8a5f36">silver % of the Roman denarius / antoninianus over time — band = surface(top) to bulk(bottom)</text>';
+  // the band: upper (surface) then lower (bulk/low) reversed
+  var up=FN.map(function(d){return X(d.yr)+','+Y(d.hi);}).join(' ');
+  var dn=FN.slice().reverse().map(function(d){return X(d.yr)+','+Y(d.lo);}).join(' ');
+  s+='<defs><linearGradient id="rot" x1="0" y1="0" x2="1" y2="0">'+
+     '<stop offset="0" stop-color="#8a8f96" stop-opacity=".55"/>'+
+     '<stop offset="1" stop-color="#a5673f" stop-opacity=".55"/></linearGradient></defs>';
+  s+='<polygon points="'+up+' '+dn+'" fill="url(#rot)" stroke="none"/>';
+  // top edge (surface) solid, bottom edge (bulk) faint
+  s+='<polyline points="'+up+'" fill="none" stroke="#6f7378" stroke-width="1.5"/>';
+  s+='<polyline points="'+FN.map(function(d){return X(d.yr)+','+Y(d.lo);}).join(' ')+'" fill="none" stroke="#a5673f" stroke-width="1" stroke-opacity=".6"/>';
+  // bulk-core check dots + connectors (dashed)
+  FN.forEach(function(d){ if(d.bulk!=null){ var x=X(d.yr);
+    s+='<line x1="'+x+'" y1="'+Y(d.hi)+'" x2="'+x+'" y2="'+Y(d.bulk)+'" stroke="#585c61" stroke-width="1" stroke-dasharray="3 2"/>';
+    s+='<circle cx="'+x+'" cy="'+Y(d.bulk)+'" r="3.4" fill="var(--vellum)" stroke="#585c61" stroke-width="1.4"/>'; } });
+  // event marks
+  FN.forEach(function(d){ if(d.mark){ var x=X(d.yr), y=Y(d.hi);
+    s+='<line x1="'+x+'" y1="'+y+'" x2="'+x+'" y2="'+(mT)+'" stroke="#b0472e" stroke-width="1" stroke-dasharray="2 3" opacity=".5"/>';
+    s+='<circle cx="'+x+'" cy="'+y+'" r="3" fill="#b0472e"/>'; } });
+  // event labels (staggered)
+  var marks=FN.filter(function(d){return d.mark;});
+  marks.forEach(function(d,i){ var x=X(d.yr);
+    var tx=Math.min(Math.max(x, mL+70), W-mR-70);
+    var ty=mT+10+i*0; // place along top
+    s+='<text x="'+(x+4)+'" y="'+(mT+9)+'" font-family="monospace" font-size="7.5" fill="#b0472e" transform="rotate(90 '+(x+4)+' '+(mT+9)+')">'+d.mark.split(' · ')[0]+'</text>';
+  });
+  document.getElementById("finenessSvg").innerHTML=s;
+})();
+
+/* ---------- debase-the-mint / Gresham toy ---------- */
+var tariff=2.0, metal=1.5, peg=true, N=8;
+var tEl=document.getElementById("tariff"), mEl=document.getElementById("metal"),
+    tV=document.getElementById("tariffV"), mV=document.getElementById("metalV"),
+    pegEl=document.getElementById("peg"), pegLbl=document.getElementById("pegLbl"),
+    circEl=document.getElementById("circ"), hoardEl=document.getElementById("hoard"),
+    vEl=document.getElementById("mintVerdict");
+function coin(cls,ch){ var c=document.createElement("div"); c.className="coin "+cls; c.textContent=ch; return c; }
+function mint(){
+  tV.textContent=tariff.toFixed(1); mV.textContent=metal.toFixed(1);
+  var over = tariff>metal+1e-9;            // debased coin is overvalued at the tariff
+  circEl.innerHTML=""; hoardEl.innerHTML="";
+  // good coins = full-silver (not debased); bad = debased (metal < tariff)
+  if(!over){ // both circulate
+    for(var i=0;i<N;i++) circEl.appendChild(coin("good","◈"));
+    for(var j=0;j<N;j++) circEl.appendChild(coin("bad","©"));
+    vEl.className="verdict fair";
+    vEl.innerHTML="⚖ <b>Tariff ≤ metal — the coin is worth its silver.</b> No one gains by hoarding; both good and debased coins circulate side by side. Debasement only bites once the law values a coin above its metal."; return; }
+  if(peg){ // Gresham: good coins fled to the hoard, only bad left circulating
+    for(var j=0;j<N;j++) circEl.appendChild(coin("bad","©"));
+    for(var i=0;i<N;i++) hoardEl.appendChild(coin("good enter","◈"));
+    vEl.className="verdict gresham";
+    vEl.innerHTML="↯ <b>Gresham's Law:</b> the law forces both coins at par, but a full-silver ◈ is worth more melted, exported, or hoarded than spent — so it <b>vanishes from circulation</b>. Only the debased © coin is left to trade, and prices <i>in coin</i> rise. Bad money drove out good — because a mispriced peg made it profitable.";
+  } else { // Thiers reverse: bad coin discounted, good stays in circulation
+    for(var i=0;i<N;i++) circEl.appendChild(coin("good","◈"));
+    for(var j=0;j<N;j++){ var b=coin("bad","©"); b.style.opacity=".5"; b.title="discounted"; circEl.appendChild(b); }
+    vEl.className="verdict thiers";
+    vEl.innerHTML="↺ <b>Peg off — Thiers' case:</b> people are free to <i>discount</i> the debased © coin (take it only at a markdown). Now no one is forced to overpay, the good ◈ coin has no reason to flee, and it stays in circulation while the bad one trades at its true, lower worth. Remove the mispriced peg and Gresham reverses.";
+  }
+}
+tEl.oninput=function(){ tariff=+tEl.value; mint(); };
+mEl.oninput=function(){ metal=+mEl.value; mint(); };
+pegEl.onclick=function(){ peg=!peg; pegEl.classList.toggle("on",peg);
+  pegLbl.innerHTML=peg?"<b>legal tender at par: ON</b> — the law forces both coins accepted equally":"<b>legal tender at par: OFF</b> — people may discount the debased coin";
+  mint(); };
+mint();
+
+/* ---------- two attacks ---------- */
+function drawCoin(id,clipDeg,alloyFrac){
+  var svg=document.getElementById(id), r=46, cx=60, cy=60;
+  var silver='#c9ced4', copper='#a5673f';
+  var s='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+silver+'" stroke="#8a8f96" stroke-width="2"/>';
+  if(alloyFrac>0){ // copper wedge growing from center
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*Math.sqrt(alloyFrac))+'" fill="'+copper+'" opacity=".85"/>'; }
+  if(clipDeg>0){ // clip a wedge off the rim (a chord)
+    var a0=-clipDeg/2*Math.PI/180, a1=clipDeg/2*Math.PI/180;
+    var x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0), x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    s+='<path d="M '+x0+' '+y0+' A '+r+' '+r+' 0 0 0 '+x1+' '+y1+' Z" fill="var(--vellum)"/>'; }
+  s+='<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" font-family="monospace" font-size="14" fill="#3a2410">I</text>';
+  svg.innerHTML=s;
+}
+var clip=0, alloy=0;
+drawCoin("stdCoin",0,0); drawCoin("alloyCoin",0,0);
+document.getElementById("stdBtn").onclick=function(){ clip=Math.min(clip+40,200); drawCoin("stdCoin",clip,0);
+  var lost=Math.round(clip/360*100);
+  document.getElementById("stdCn").innerHTML="Rim shaved. Still stamped <b>I</b> — but ~"+lost+"% of the silver is <i>gone by weight</i>. The name lies about the mass."; };
+document.getElementById("alloyBtn").onclick=function(){ alloy=Math.min(alloy+0.2,1); drawCoin("alloyCoin",0,alloy);
+  var cu=Math.round(alloy*100);
+  document.getElementById("alloyCn").innerHTML="Same weight, same stamp <b>I</b> — but ~"+cu+"% is now <i>copper</i>. The name lies about the metal. (Needs a coin that passes by face.)"; };
+</script>
+</body>
+</html>
