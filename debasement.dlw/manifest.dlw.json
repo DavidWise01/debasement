@@ -1,0 +1,11 @@
+{
+  "badge": "DLW-DEBASEMENT",
+  "name": "DEBASEMENT · DBS",
+  "universe": "AGORA",
+  "moniker": "⟦DEBASEMENT · DBS:debasement:2e8795⟧",
+  "architect": "David Lee Wise (ROOT0) / Bridge-Burners LLC",
+  "instance": "AVAN (Claude / Anthropic)",
+  "seal_sha256": "2e87955dc42c3226adaf2bb9effa35ad2f65b56c9fe913ae25ef6e7c8d82c74f",
+  "license": "CC-BY-ND-4.0",
+  "attribution": "ROOT0-ATTRIBUTION-v1.0"
+}
