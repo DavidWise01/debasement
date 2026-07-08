@@ -4,6 +4,6 @@ slug  : debasement
 seal  : 2e87955dc42c3226adaf2bb9effa35ad2f65b56c9fe913ae25ef6e7c8d82c74f
 prev  : 05be4fa664134cf46eeccad8ce8d82da113d353ca0f3375325624782b8b43ed5
 link  : 80ed610585dde8b320ca9050d3e84a2c9d94dee416a45d5d60de5c2fa7e79f76
-head  : 3447d3a0533aaf1e29a8bdc67a9774884fb3ae9dbc8a17064b7a008ca3c4ec90
+head  : 13f9ace173ef2e60af38912ba329b4afcb5a38b84a0e4495e8d30327f8c99cc2
 
 — the tether: link = sha256(index|slug|seal|prev). the chain head commits to the whole corpus.
